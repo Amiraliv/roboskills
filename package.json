@@ -2,9 +2,6 @@
   "name": "roboskills",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "20.x"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,26 +9,27 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@react-three/drei": "^9.88.7",
-    "@react-three/fiber": "^8.15.16",
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.4.0",
     "@studio-freight/lenis": "^1.0.42",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
-    "framer-motion": "^11.0.0",
+    "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
-    "next": "14.2.5",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "next": "15.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-masonry-css": "^1.0.16",
     "sass": "^1.93.3",
+    "scss": "^0.2.4",
     "three": "^0.181.0"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.13",
-    "postcss": "^8.4.47",
-    "autoprefixer": "^10.4.19",
-    "@types/node": "20.11.30",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.5"
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "24.10.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.6",
+    "tailwindcss": "^4"
   }
 }
