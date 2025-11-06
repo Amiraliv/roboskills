@@ -1,7 +1,11 @@
+import { LayoutData } from "../../components";
+
 const About = () => {
   return (
     <section>
-      <h2>RoboSkills درباره مسابقات</h2>
+      <LayoutData>
+        <h2>RoboSkills درباره مسابقات</h2>
+      </LayoutData>
     </section>
   );
 };

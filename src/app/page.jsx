@@ -1,5 +1,12 @@
 import { ParticlesBackground } from "./../components";
-import { About, Banner, Header, Leagues, VideoLoop } from "./../containers";
+import {
+  About,
+  Banner,
+  Gallery,
+  Header,
+  Leagues,
+  VideoLoop,
+} from "./../containers";
 
 export default function Home() {
   return (
@@ -9,6 +16,7 @@ export default function Home() {
       <VideoLoop />
       <Banner />
       <Leagues />
+      {/* <Gallery /> */}
       <About />
     </main>
   );

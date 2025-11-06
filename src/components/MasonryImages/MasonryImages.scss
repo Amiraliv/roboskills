@@ -1,0 +1,29 @@
+.my-masonry-grid {
+  display: flex;
+  margin-left: -1rem; // فاصله بین ستون‌ها
+  width: auto;
+}
+
+.my-masonry-grid_column {
+  padding-left: 1rem; // فاصله داخلی هر ستون
+  background-clip: padding-box;
+
+  > div {
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 1rem; // گرد کردن گوشه‌ها
+    transition: transform 0.5s ease;
+
+    img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.6s ease;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+}

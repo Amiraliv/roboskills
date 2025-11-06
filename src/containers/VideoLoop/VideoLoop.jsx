@@ -14,6 +14,8 @@ export default function VideoLoop() {
           style={{
             width: "100%",
             height: "100%",
+            maxHeight: "1080px",
+            margin: "auto",
             objectFit: "cover",
             overflow: "hidden",
           }} // fill container

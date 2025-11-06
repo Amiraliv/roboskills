@@ -15,7 +15,25 @@
       flex: 1;
       display: flex;
       justify-content: flex-start;
-      font-size: clamp(1rem, 2vw, 1.5rem);
+      position: relative;
+      font-size: clamp(0.6rem, 2vw, 1.2rem);
+      gap: 6px;
+
+      .navbarMobileShow {
+        display: none;
+        color: white;
+        background-color: #ee151583;
+        outline: none;
+        border: none;
+        border-radius: 999px;
+        width: 3.2rem;
+        cursor: pointer;
+        font-size: clamp(0.6rem, 2vw, 1.2rem);
+
+        @media screen and (max-width: 1180px) {
+          display: block;
+        }
+      }
 
       a {
         display: flex;
@@ -24,7 +42,7 @@
         color: white;
         text-decoration: none;
         background-color: #ee151583;
-        padding: 16px 24px;
+        padding: 14px 16px;
         border-radius: 999px;
         animation: fadeIn 1.5s ease-out forwards;
       }
@@ -66,6 +84,10 @@
             }
           }
         }
+      }
+
+      @media screen and (max-width: 1180px) {
+        display: none;
       }
     }
 

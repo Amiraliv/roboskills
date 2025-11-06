@@ -1,17 +1,36 @@
+"use client";
+
 import "./Header.scss";
 
-import { AnimatedText, LayoutData } from "./../../components";
+import { useState } from "react";
+import { AnimatedText, LayoutData, MobileNavbar } from "./../../components";
+import { BiMenu } from "react-icons/bi";
+import { BiMenuAltLeft } from "react-icons/bi";
+
 import Image from "next/image";
 
 const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleOpenMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <header className="index__Header">
       <LayoutData>
         <nav className="index__Header_main">
           <div className="header__enter">
+            <button className="navbarMobileShow" onClick={handleOpenMenu}>
+              {mobileMenuOpen ? <BiMenu /> : <BiMenuAltLeft />}
+            </button>
             <a href="/login">
               <AnimatedText text={"ثبت نام / ورود"} />
             </a>
+            <MobileNavbar
+              isOpen={mobileMenuOpen}
+              handleClose={setMobileMenuOpen}
+            />
           </div>
           <div className="header__items">
             <ul>
@@ -44,7 +63,7 @@ const Header = () => {
           </div>
           <div className="header__data">
             <h1>
-              <AnimatedText text={<>RoboSkills</>} />
+              <AnimatedText text={"RoboSkills"} />
             </h1>
             <Image
               src={"/assets/img/Logo-main.png"}
