@@ -1,6 +1,7 @@
 import "./global.scss";
 
 import { AnimatedLayout } from "../components";
+import { AuthProvider } from "./authProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <>{children}</>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

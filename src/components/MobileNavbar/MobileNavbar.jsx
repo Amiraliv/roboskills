@@ -46,7 +46,7 @@ const MobileNavbar = ({ handleClose = () => {}, isOpen = false }) => {
               </a>
             </li>
             <li>
-              <a href="/competition-data">
+              <a href="/#competition">
                 <AnimatedText text={"اطلاعات مسابقه"} />
               </a>
             </li>

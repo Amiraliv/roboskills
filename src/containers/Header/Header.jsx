@@ -3,18 +3,27 @@
 import "./Header.scss";
 
 import { useState } from "react";
-import { AnimatedText, LayoutData, MobileNavbar } from "./../../components";
+import {
+  AnimatedText,
+  HeaderProfileData,
+  LayoutData,
+  MobileNavbar,
+} from "./../../components";
 import { BiMenu } from "react-icons/bi";
 import { BiMenuAltLeft } from "react-icons/bi";
 
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleOpenMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  console.log(session);
 
   return (
     <header className="index__Header">
@@ -24,9 +33,7 @@ const Header = () => {
             <button className="navbarMobileShow" onClick={handleOpenMenu}>
               {mobileMenuOpen ? <BiMenu /> : <BiMenuAltLeft />}
             </button>
-            <a href="/login">
-              <AnimatedText text={"ثبت نام / ورود"} />
-            </a>
+            <HeaderProfileData />
             <MobileNavbar
               isOpen={mobileMenuOpen}
               handleClose={setMobileMenuOpen}
@@ -35,7 +42,7 @@ const Header = () => {
           <div className="header__items">
             <ul>
               <li>
-                <a href="/competition-data">
+                <a href="/#competition">
                   <AnimatedText text={"اطلاعات مسابقه"} />
                 </a>
               </li>
