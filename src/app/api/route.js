@@ -1,9 +1,12 @@
 "use server";
 
+import { sendVerificationEmail } from "./../../lib/auth";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  console.log(process.env.DATABASE_URL);
+  const res = await sendVerificationEmail("amirlulufk@gmail.com", "26kir");
+
+  console.log("sendVerificationEmail", res);
 
   return NextResponse.json({ uptime: process.uptime() });
 }

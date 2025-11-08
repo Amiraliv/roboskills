@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import prisma from "./../../../../lib/prisma";
 import bcrypt from "bcrypt";
 
@@ -6,12 +7,12 @@ export async function POST(req) {
     const { name, email, password } = await req.json();
 
     if (!email || !password) {
-      return Response.json({ error: "اطلاعات ناقص است" }, { status: 400 });
+      return NextResponse.json({ error: "اطلاعات ناقص است" }, { status: 400 });
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return Response.json(
+      return NextResponse.json(
         { error: "این ایمیل قبلاً ثبت شده است" },
         { status: 400 }
       );
@@ -20,12 +21,16 @@ export async function POST(req) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
+      data: {
+        email,
+        name,
+        password: hashedPassword,
+      },
     });
 
-    return Response.json({ user: newUser }, { status: 201 });
+    return NextResponse.json({ user: newUser }, { status: 201 });
   } catch (err) {
     console.error(err);
-    return Response.json({ error: "خطا در ثبت‌نام" }, { status: 500 });
+    return NextResponse.json({ error: "خطا در ثبت‌نام" }, { status: 500 });
   }
 }

@@ -1,48 +1,47 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import { compareHash } from "./../../../../lib/auth";
 
 const prisma = new PrismaClient();
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
-
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Credentials",
-
+      name: "EmailCode",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: "Email", type: "email" },
+        code: { label: "Code", type: "text" },
       },
-
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+        if (!credentials) return null;
+        const { email, code } = credentials;
+
+        const record = await prisma.verificationCode.findFirst({
+          where: { email, used: false, expiresAt: { gt: new Date() } },
+          orderBy: { createdAt: "desc" },
         });
 
-        if (!user) {
-          throw new Error("کاربر یافت نشد");
-        }
+        if (!record) return null;
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-        if (!isValid) {
-          throw new Error("رمز عبور اشتباه است");
-        }
+        const ok = await compareHash(code, record.codeHash);
+        if (!ok) return null;
 
-        return user;
+        await prisma.verificationCode.update({
+          where: { id: record.id },
+          data: { used: true },
+        });
+
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) return null;
+
+        return { id: user.id, email: user.email };
       },
     }),
   ],
-
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET,
-};
+  jwt: { secret: process.env.NEXTAUTH_SECRET },
+  pages: { signIn: "/auth/signin" },
+});
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

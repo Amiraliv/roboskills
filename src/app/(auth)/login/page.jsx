@@ -1,51 +1,48 @@
 "use client";
-
-import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function PasswordSignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState(null);
+  const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    setMessage(null);
 
-    if (result.error) {
-      setError("ایمیل یا رمز اشتباه است");
+    const res = await fetch("/api/auth/login-password", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    if (res.ok) {
+      router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
     } else {
-      window.location.href = "/";
+      setMessage(data.error || "مشکلی پیش آمده");
     }
-  };
+  }
 
   return (
-    <div style={{ maxWidth: 400, margin: "2rem auto", textAlign: "center" }}>
-      <h2>ورود</h2>
+    <div style={{ maxWidth: 420, margin: "40px auto" }}>
+      <h2>ورود با ایمیل و پسورد</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="ایمیل"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
+          placeholder="ایمیل"
         />
-        <br />
         <input
           type="password"
-          placeholder="رمز عبور"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
+          placeholder="پسورد"
         />
-        <br />
-        <button type="submit">ورود</button>
+        <button type="submit">ارسال و دریافت کد</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {message && <p>{message}</p>}
     </div>
   );
 }
