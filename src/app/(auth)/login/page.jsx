@@ -19,7 +19,7 @@ export default function PasswordSignIn() {
     });
     const data = await res.json();
     if (res.ok) {
-      router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
+      router.push(`/auth/verify?email=${email}&mode=login`);
     } else {
       setMessage(data.error || "مشکلی پیش آمده");
     }

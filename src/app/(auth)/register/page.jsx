@@ -8,27 +8,41 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setMessage("");
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      setError(data.error || "خطایی رخ داده است");
-      return;
+      if (!res.ok) {
+        setError(data.error || "خطایی رخ داده است");
+        return;
+      }
+
+      setMessage("کد تأیید به ایمیل شما ارسال شد.");
+      // برو به صفحه تأیید
+      router.push(
+        `/auth/verify?email=${encodeURIComponent(
+          email
+        )}&mode=register&name=${encodeURIComponent(
+          name
+        )}&password=${encodeURIComponent(password)}`
+      );
+    } catch (err) {
+      console.error(err);
+      setError("خطایی در اتصال به سرور رخ داد");
     }
-
-    // بعد از ساخت اکانت، بفرست به صفحه لاگین
-    router.push("/login");
   };
 
   return (
@@ -62,6 +76,7 @@ export default function RegisterPage() {
         <button type="submit">ثبت‌نام</button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      {message && <p style={{ color: "green" }}>{message}</p>}
     </div>
   );
 }

@@ -33,15 +33,6 @@ export async function POST(req) {
       );
     }
 
-    const recent = await prisma.verificationCode.findFirst({
-      where: { email },
-      orderBy: { createdAt: "desc" },
-    });
-
-    if (recent && new Date().getTime() - recent.createdAt.getTime() < 60_000) {
-      return NextResponse.json({ error: "too many requests" }, { status: 429 });
-    }
-
     const code = generateNumericCode(6);
     const codeHash = await hashValue(code);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);

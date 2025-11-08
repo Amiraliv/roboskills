@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "./../../../../lib/prisma";
-import bcrypt from "bcrypt";
+import {
+  generateNumericCode,
+  hashValue,
+  sendVerificationEmail,
+} from "./../../../../lib/auth";
 
 export async function POST(req) {
   try {
@@ -18,17 +22,19 @@ export async function POST(req) {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const code = generateNumericCode(6);
+    const codeHash = await hashValue(code);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        name,
-        password: hashedPassword,
-      },
+    await prisma.verificationCode.deleteMany({ where: { email } });
+
+    await prisma.verificationCode.create({
+      data: { email, codeHash, expiresAt },
     });
 
-    return NextResponse.json({ user: newUser }, { status: 201 });
+    await sendVerificationEmail(email, code);
+
+    return NextResponse.json({ message: "کد تأیید ارسال شد" }, { status: 200 });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "خطا در ثبت‌نام" }, { status: 500 });
