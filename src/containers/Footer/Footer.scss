@@ -1,0 +1,121 @@
+.footer {
+  background: radial-gradient(circle at top left, #001529, #000a13);
+  color: #ffffffcc;
+  padding: 60px 20px 20px;
+  font-family: "IRANSans", sans-serif;
+  position: relative;
+
+  .footer__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer__brand {
+    h2 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    p {
+      line-height: 1.8;
+      font-size: 1rem;
+      color: #ffffffb3;
+
+      strong {
+        color: #00c6ff;
+      }
+    }
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+
+    h3 {
+      color: #00c6ff;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 10px;
+
+        a {
+          color: #ffffffcc;
+          text-decoration: none;
+          transition: all 0.3s ease;
+
+          &:hover {
+            color: #00c6ff;
+            text-shadow: 0 0 10px #00c6ff80;
+          }
+
+          svg {
+            margin-left: 6px;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    .footer__socials {
+      a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
+  .footer__contact {
+    h3 {
+      color: #00c6ff;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      line-height: 2;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+
+        svg {
+          color: #00c6ff;
+        }
+
+        span {
+          color: #ffffffcc;
+        }
+      }
+    }
+  }
+
+  .footer__bottom {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding-top: 20px;
+
+    p {
+      font-size: 0.9rem;
+      color: #ffffff99;
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { ParticlesBackground } from "./../components";
 import {
   About,
   Banner,
+  Footer,
   Gallery,
   Header,
   Leagues,
@@ -18,6 +19,7 @@ export default function Home() {
       <Leagues />
       {/* <Gallery /> */}
       <About />
+      <Footer />
     </main>
   );
 }

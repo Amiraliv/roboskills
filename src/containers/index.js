@@ -4,3 +4,4 @@ export { default as Banner } from "./Banner/Banner";
 export { default as Leagues } from "./Leagues/Leagues";
 export { default as About } from "./About/About";
 export { default as Gallery } from "./Gallery/Gallery";
+export { default as Footer } from "./Footer/Footer";
