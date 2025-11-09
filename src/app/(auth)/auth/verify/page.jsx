@@ -1,9 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function VerifyCodePage() {
+function VerifyCodePageInner() {
   const [code, setCode] = useState("");
   const [message, setMessage] = useState(null);
   const params = useSearchParams();
@@ -20,7 +20,6 @@ export default function VerifyCodePage() {
     e.preventDefault();
     setMessage(null);
 
-    // 🔹 حالت ورود
     if (mode === "login") {
       const result = await signIn("credentials", {
         redirect: false,
@@ -37,7 +36,6 @@ export default function VerifyCodePage() {
       return;
     }
 
-    // 🔹 حالت ثبت‌نام
     if (mode === "register") {
       const name = params.get("name");
       const password = params.get("password");
@@ -82,5 +80,16 @@ export default function VerifyCodePage() {
 
       {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
     </div>
+  );
+}
+
+// 🔹 این کامپوننت فقط برای wrap کردن Suspense است
+export default function VerifyCodePage() {
+  return (
+    <Suspense
+      fallback={<p style={{ textAlign: "center" }}>در حال بارگذاری...</p>}
+    >
+      <VerifyCodePageInner />
+    </Suspense>
   );
 }
