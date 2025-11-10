@@ -1,4 +1,4 @@
-import { ParticlesBackground } from "./../components";
+import { GalaxyBackground, ParticlesBackground } from "./../components";
 import {
   About,
   Banner,
@@ -12,7 +12,8 @@ import {
 export default function Home() {
   return (
     <main className="bg-black text-white">
-      <ParticlesBackground />
+      {/* <ParticlesBackground /> */}
+      <GalaxyBackground />
       <Header />
       <VideoLoop />
       <Banner />

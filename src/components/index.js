@@ -6,3 +6,6 @@ export { default as MasonryImages } from "./MasonryImages/MasonryImages";
 export { default as MobileNavbar } from "./MobileNavbar/MobileNavbar";
 export { default as AnimatedLink } from "./AnimatedLink/AnimatedLink";
 export { default as HeaderProfileData } from "./HeaderProfileData/HeaderProfileData";
+export { default as WaceCard } from "./WaveCard/WaveCard";
+export { default as BounceImage } from "./BounceImage/BounceImage";
+export { default as GalaxyBackground } from "./GalaxyBackground/GalaxyBackground";
