@@ -19,11 +19,11 @@
 
     ul {
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-wrap: wrap;
-      margin: 30px;
-      gap: 20px;
+      justify-content: center;
+      gap: 16px; // فاصله بین کارت‌ها
+      list-style: none;
+      padding: 0;
 
       li {
         min-width: 300px;
@@ -32,6 +32,9 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 30px;
+        flex: 0 0 calc(50% - 16px); // دو تا دوتا کنار هم
+        display: flex;
+        justify-content: center;
 
         a {
           width: 100%;
