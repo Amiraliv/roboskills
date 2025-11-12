@@ -1,4 +1,8 @@
-import { GalaxyBackground, ParticlesBackground } from "./../components";
+import {
+  GalaxyBackground,
+  ParticlesBackground,
+  TubeScene,
+} from "./../components";
 import {
   About,
   Banner,
@@ -13,7 +17,8 @@ export default function Home() {
   return (
     <main className="bg-black text-white">
       {/* <ParticlesBackground /> */}
-      <GalaxyBackground />
+      {/* <GalaxyBackground /> */}
+      <TubeScene />
       <Header />
       <VideoLoop />
       <Banner />
