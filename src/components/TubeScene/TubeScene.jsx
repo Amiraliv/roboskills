@@ -8,8 +8,8 @@ function Tube({ progress, config }) {
     numPoints = 300,
     radius = 0.12,
     tubularSegments = 400,
-    gradientTop = "#FFD700",
-    gradientBottom = "#8B0000",
+    gradientTop = "#FF4C4C", // قرمز روشن‌تر
+    gradientBottom = "#8B0000", // قرمز جگری
     keyPoints = [
       new THREE.Vector3(-5, 0, 0),
       new THREE.Vector3(-3, 1, 0),
@@ -19,7 +19,7 @@ function Tube({ progress, config }) {
     ],
   } = config;
 
-  // Generate geometry based on scroll progress
+  // ایجاد هندسه لوله بر اساس میزان اسکرول
   const geometry = useMemo(() => {
     if (progress <= 0) return null;
 
@@ -38,18 +38,18 @@ function Tube({ progress, config }) {
       dynamicPath,
       tubularSegments,
       radius,
-      16,
+      32,
       false
     );
 
-    // Gradient colors vertical
+    // گرادینت عمودی روی لوله
     const colorTop = new THREE.Color(gradientTop);
     const colorBottom = new THREE.Color(gradientBottom);
     const pos = tubeGeo.attributes.position;
     const colors = [];
     for (let i = 0; i < pos.count; i++) {
       const y = pos.getY(i);
-      const t = (y + 1.5) / 3; // normalize, radius 1.5
+      const t = (y + 1.5) / 3;
       const color = colorBottom.clone().lerp(colorTop, t);
       colors.push(color.r, color.g, color.b);
     }
@@ -69,14 +69,28 @@ function Tube({ progress, config }) {
   if (!geometry) return null;
 
   return (
-    <mesh geometry={geometry}>
-      <meshStandardMaterial
-        vertexColors={true}
-        emissiveIntensity={0.6}
-        metalness={0.4}
-        roughness={0.3}
-      />
-    </mesh>
+    <>
+      {/* outer metallic tube */}
+      <mesh geometry={geometry}>
+        <meshStandardMaterial
+          vertexColors
+          emissive="#8B0000"
+          emissiveIntensity={0.7}
+          metalness={0.7}
+          roughness={0.3}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* inner glowing core */}
+      <mesh geometry={geometry} scale={[0.8, 0.8, 0.8]}>
+        <meshBasicMaterial
+          color="#FF4C4C"
+          emissive="#FF6666"
+          emissiveIntensity={1.5}
+        />
+      </mesh>
+    </>
   );
 }
 
@@ -85,7 +99,7 @@ export default function TubeBackgroundScene() {
   const smoothProgress = useRef(0);
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
-  // Track scroll
+  // کنترل اسکرول صفحه
   useEffect(() => {
     const handleScroll = () => {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
@@ -96,7 +110,7 @@ export default function TubeBackgroundScene() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll-based progress
+  // نرم‌کردن حرکت با انیمیشن
   useEffect(() => {
     let frame;
     const animate = () => {
@@ -109,11 +123,12 @@ export default function TubeBackgroundScene() {
     return () => cancelAnimationFrame(frame);
   }, [scrollProgress]);
 
+  // مسیر لوله قابل تنظیم
   const tubeConfig = {
-    radius: 0.12,
+    radius: 0.15,
     tubularSegments: 400,
     numPoints: 300,
-    gradientTop: "#FFD700", // طلایی روشن
+    gradientTop: "#FF4C4C", // قرمز روشن
     gradientBottom: "#8B0000", // قرمز جگری
     keyPoints: [
       new THREE.Vector3(-21, 8, 0),
@@ -125,7 +140,7 @@ export default function TubeBackgroundScene() {
       new THREE.Vector3(-8, 1, 0),
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(3, -1, 0),
-      new THREE.Vector3(5, 0, 0),
+      new THREE.Vector3(21, 0, 0),
     ],
   };
 
@@ -143,8 +158,8 @@ export default function TubeBackgroundScene() {
         background: "black",
       }}
     >
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[5, 5, 5]} intensity={1.2} />
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[5, 5, 5]} intensity={1.3} />
       <Tube progress={animatedProgress} config={tubeConfig} />
     </Canvas>
   );
